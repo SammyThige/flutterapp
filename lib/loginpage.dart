@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lost_n_found/registrationscreen.dart';
 import 'package:lost_n_found/fPage/dashboard.dart';
+import 'package:lost_n_found/mywidgets.dart';
+import 'package:http/http.dart' as http;
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -10,9 +14,14 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  late ScaffoldMessengerState scaffoldMessenger;
   //final textfl = new Registration();
   @override
   Widget build(BuildContext context) {
+    scaffoldMessenger = ScaffoldMessenger.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -38,7 +47,7 @@ class _HomepageState extends State<Homepage> {
                         BoxShadow(
                             color: Color.fromRGBO(143, 148, 251, 1),
                             blurRadius: 20.0,
-                            offset: Offset(0, 10))
+                            offset: Offset(10, 10))
                       ]),
                   child: Column(children: <Widget>[
                     Container(
@@ -47,6 +56,7 @@ class _HomepageState extends State<Homepage> {
                           border:
                               Border(bottom: BorderSide(color: Colors.grey))),
                       child: TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             labelText: "Email or Phone Number",
@@ -56,6 +66,9 @@ class _HomepageState extends State<Homepage> {
                     Container(
                       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                       child: TextField(
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        controller: passwordController,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             labelText: "Password",
@@ -85,10 +98,7 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => DashBoard()));
+                      loginFunction();
                     }),
                 SizedBox(
                   height: 30,
@@ -140,4 +150,66 @@ class _HomepageState extends State<Homepage> {
       ),
     );
   }
+
+  void loginFunction() {
+    if (passwordController.text.isEmpty && emailController.text.isEmpty) {
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Provide Email and Password"),
+      );
+
+      return;
+    } else if (passwordController.text.isEmpty) {
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Provide Password"),
+      );
+      return;
+    } else if (emailController.text.isEmpty) {
+      //call sigin function
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Provide Email"),
+      );
+      return;
+    } else {
+      // signIn(emailController.text, passwordController.text);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) => DashBoard()));
+    }
+  }
+
+  /* signIn(String email, password) async {
+    DialogBuilder(context).showLoadingIndicator(
+        "Please wait as we authenticate you", "Authentication");
+    Map data = {'email': email, 'password': password};
+    var jsonResponse;
+    var response = await http.post(
+        Uri.parse(
+            "http://localhost/phpmyadmin/index.php?route=/database/structure&server=1&db=Lost_and_Found"),
+        body: data);
+    if (response.statusCode == 200) {
+      jsonResponse = json.decode(response.body);
+      if (jsonResponse != null) {
+        setState(() {
+          DialogBuilder(context).hideOpenDialog();
+        });
+        int isRegistered = jsonResponse['code'];
+        if (isRegistered == 1) {
+          //correct password
+          //move to dashboard
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => DashBoard()));
+        } else {
+          //wrongpassword use SnackBar to Show
+          scaffoldMessenger.showSnackBar(
+            mySnackBar("Wrong Password"),
+          );
+        }
+      }
+    } else {
+      setState(() {
+        DialogBuilder(context).hideOpenDialog();
+      });
+    }
+  } */
 }

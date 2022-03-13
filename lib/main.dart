@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lost_n_found/loginpage.dart';
+import 'package:lost_n_found/theme.dart';
+import 'package:lost_n_found/theme.dart';
 
 /* void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -15,6 +17,8 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      //theme: lightThemeData(context),
+      //darkTheme: darkThemeData(context),
       home: Scaffold(
         resizeToAvoidBottomInset: true,
         body: Homepage(),
