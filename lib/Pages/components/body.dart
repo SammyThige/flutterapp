@@ -27,7 +27,7 @@ class Body extends StatelessWidget {
                   onPressed: () {},
                   child: Text(
                     "Recent",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black), 
                   ),
                 )
               ],
