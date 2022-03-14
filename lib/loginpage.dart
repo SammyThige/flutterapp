@@ -170,20 +170,20 @@ class _HomepageState extends State<Homepage> {
       );
       return;
     } else {
-      // signIn(emailController.text, passwordController.text);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (BuildContext context) => DashBoard()));
+      signIn(emailController.text, passwordController.text);
+     /*  Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) => DashBoard()),
+          ); */
     }
   }
 
-  /* signIn(String email, password) async {
+  signIn(String email, password) async {
     DialogBuilder(context).showLoadingIndicator(
         "Please wait as we authenticate you", "Authentication");
     Map data = {'email': email, 'password': password};
     var jsonResponse;
     var response = await http.post(
-        Uri.parse(
-            "http://localhost/phpmyadmin/index.php?route=/database/structure&server=1&db=Lost_and_Found"),
+        Uri.parse("https://sam-thige.000webhostapp.com/login.php"),
         body: data);
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -211,5 +211,5 @@ class _HomepageState extends State<Homepage> {
         DialogBuilder(context).hideOpenDialog();
       });
     }
-  } */
+  }
 }

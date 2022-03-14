@@ -47,7 +47,7 @@ List chatsData = [
     time: "6d ago",
     isActive: false,
   ),
-  /* Chat(
+  Chat(
     name: "Jenny Wilson",
     lastMessage: "Hope you are doing well...",
     image: "assets/user.png",
@@ -67,5 +67,5 @@ List chatsData = [
     image: "assets/user.png",
     time: "5d ago",
     isActive: false,
-  ), */
+  ),
 ];

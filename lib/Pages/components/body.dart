@@ -34,6 +34,8 @@ class Body extends StatelessWidget {
             )), */
         Expanded(
             child: ListView.builder(
+          itemCount: chatsData.length,
+          shrinkWrap: true,
           itemBuilder: (context, index) => ChatCard(
               chat: chatsData[index],
               press: () => Navigator.push(context,
