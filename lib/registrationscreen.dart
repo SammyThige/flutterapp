@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lost_n_found/loginpage.dart';
+import 'package:lost_n_found/mywidgets.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Registration extends StatefulWidget {
   const Registration({Key? key}) : super(key: key);
@@ -150,12 +153,97 @@ class _RegistrationState extends State<Registration> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  SignUpFunction();
+                  /*  Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => Homepage()));
+                          builder: (BuildContext context) => Homepage())); */
                 })
           ])),
     );
+  }
+
+  void SignUpFunction() {
+    if (fName.text.isEmpty) {
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Provide First Name"),
+      );
+
+      return;
+    } else if (sName.text.isEmpty) {
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Provide Second Name"),
+      );
+      return;
+    } else if (email.text.isEmpty) {
+      //call sigin function
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Provide Email"),
+      );
+      return;
+    } else if (password.text.isEmpty) {
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Provide Password"),
+      );
+      return;
+    } else if (cfrmpassword.text.isEmpty) {
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Please re-type the password"),
+      );
+      return;
+    } else if (cfrmpassword.text != password.text) {
+      scaffoldMessenger.showSnackBar(
+        mySnackBar("Password does not match"),
+      );
+      return;
+    } else {
+      signUp(fName.text, sName.text, email.text, password.text);
+      /*  Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) => DashBoard()),
+          ); */
+    }
+  }
+
+  signUp(String Fname, Sname, email, password) async {
+    print(fName.text);
+    print(sName.text);
+    DialogBuilder(context).showLoadingIndicator(
+        "Please wait as we register you", "Authentication");
+    Map data = {
+      'firstName': Fname,
+      'secondName': Sname,
+      'email': email,
+      'password': password
+    };
+    var jsonResponse;
+    var response = await http.post(
+        Uri.parse("https://sam-thige.000webhostapp.com/signup.php"),
+        body: data);
+
+    if (response.statusCode == 200) {
+      jsonResponse = json.decode(response.body);
+      if (jsonResponse != null) {
+        setState(() {
+
+          DialogBuilder(context).hideOpenDialog();
+        });
+        int isRegistered = jsonResponse['code'];
+        if (isRegistered == 1) {
+          //correct password
+          //move to dashboard
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) => Homepage()));
+        } else {
+          //wrongpassword use SnackBar to Show
+          scaffoldMessenger.showSnackBar(
+            mySnackBar("Wrong Password"),
+          );
+        }
+      }
+    } else {
+      setState(() {
+        DialogBuilder(context).hideOpenDialog();
+      });
+    }
   }
 }

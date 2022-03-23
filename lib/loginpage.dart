@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lost_n_found/constants.dart';
 import 'package:lost_n_found/registrationscreen.dart';
 import 'package:lost_n_found/fPage/dashboard.dart';
 import 'package:lost_n_found/mywidgets.dart';
@@ -17,7 +18,8 @@ class _HomepageState extends State<Homepage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late ScaffoldMessengerState scaffoldMessenger;
-  //final textfl = new Registration();
+  var _prefs = Prefs();
+
   @override
   Widget build(BuildContext context) {
     scaffoldMessenger = ScaffoldMessenger.of(context);
@@ -171,7 +173,7 @@ class _HomepageState extends State<Homepage> {
       return;
     } else {
       signIn(emailController.text, passwordController.text);
-     /*  Navigator.push(context,
+      /*  Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) => DashBoard()),
           ); */
     }
@@ -193,6 +195,9 @@ class _HomepageState extends State<Homepage> {
         });
         int isRegistered = jsonResponse['code'];
         if (isRegistered == 1) {
+          //use shared preferences to store username and firstname
+          var firstname = jsonResponse['fname'];
+          _prefs.addStringToSF('fname', firstname);
           //correct password
           //move to dashboard
           Navigator.push(
