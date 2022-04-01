@@ -121,8 +121,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.0.9"
+  hidable:
+    dependency: "direct main"
+    description:
+      name: hidable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -141,7 +148,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.4+10"
+    version: "0.8.4+11"
   image_picker_for_web:
     dependency: transitive
     description:

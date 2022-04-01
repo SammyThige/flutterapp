@@ -207,7 +207,7 @@ class _HomepageState extends State<Homepage> {
         } else {
           //wrongpassword use SnackBar to Show
           scaffoldMessenger.showSnackBar(
-            mySnackBar("Wrong Password"),
+            mySnackBar("Wrong Username or Password"),
           );
         }
       }

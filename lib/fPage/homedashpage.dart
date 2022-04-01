@@ -79,7 +79,7 @@ class More_key extends StatelessWidget {
             title: "$title",
           ),
           Spacer(),
-          TextButton(onPressed: () {}, child: Text("More"))
+          // TextButton(onPressed: () {}, child: Text("More"))
         ],
       ),
     );

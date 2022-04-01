@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lost_n_found/constants.dart';
 
 SnackBar mySnackBar(String message) {
   return SnackBar(
@@ -86,4 +87,32 @@ class LoadingIndicator extends StatelessWidget {
       textAlign: TextAlign.center,
     );
   }
+}
+
+Widget myTextField(String hint, TextEditingController con) {
+  return Container(
+    padding: EdgeInsets.only(top: 20.0, bottom: 20.0, right: 5.0, left: 5.0),
+    child: (TextField(
+        controller: con,
+        decoration: InputDecoration(
+            hintText: "eg. White earphones",
+            hintStyle: TextStyle(color: Colors.blue[400]),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+            labelText: hint))),
+  );
+}
+
+Widget locationTextField(String hint, TextEditingController con) {
+  return Container(
+    padding: EdgeInsets.only(bottom: 20.0, right: 5.0, left: 5.0),
+    child: (TextField(
+        controller: con,
+        decoration: InputDecoration(
+            hintText: "eg. Dining Hall",
+            hintStyle: TextStyle(color: Colors.blue[400]),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+            labelText: hint))),
+  );
 }
